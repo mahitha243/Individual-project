@@ -5,14 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vue week 8 Individual Coursework</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+    <!--CSS-->
+    <link rel="stylesheet" href="main.css">
+    <!--FONTAWESOME-->
     <script src="https://kit.fontawesome.com/7080cd0a09.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/7080cd0a09.js" crossorigin="anonymous"></script>
+    <!---VUE-->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+    <!--LESSON DETAILS-->
     <script src="lessons.js" ></script>
 
 
     <style>
         aside {
-          width: 20;
+          width: 20%;
           height: 948px;
           padding-left: 15px;
           padding-bottom: 15px;
@@ -29,7 +35,12 @@
 <a style="float: right;" href="#" class="btn btn-primary" v-if='cartItemCount === "" '  hidden>Cart</a>
     <a style="float: right;" href="#" class="btn btn-primary" @click="showCheckout()" v-else > <span class="fas fa-cart-plus"></span> Cart ({{cartItemCount}})</a>
     
-
+    <div class="col-md-6">
+        <form>
+            <input class="search_form form-control" type="text" v-model="term" v-on:keyup="searchLessons" placeholder="Search Courses" >
+        </form>
+      </div>
+      
     <!-- <a style="float: right;" href="#" class="btn btn-primary" v-on:click ='showCheckout'>{{cartItemCount}} <span class="fas fa-cart-plus"></span> Cart</a> -->
 </header>
     
@@ -157,64 +168,44 @@
                 showProd: true,
                 sitename: 'Lesson Booking',
                 sitename2: 'Shopping Cart',
-
+                term:'',
                 sort: {
-                    sortingMethod: "location",
+                    sortingMethod: "price",
                     sortingOrder: "ascending",
                 },
-
-                order: {
-                    firstName: '',
-                    lastName: '',
-                    address: '',
-                    city: '',
-                    zip: '',
-                    state: '',
-                    method: 'Home',
-                    
-
-                    
-                },
-
-                state: {
-                    AL: 'Alabama',
-                    AR: 'Arizona',
-                    CA: 'Canada',
-                    NV: 'Nevada',
-                },
-            user:{
-                id: '',
-                name: '',
-                number: '',
+                user:{
+                       name: '',
+                       number: '',
             },
-                lesson: lessonsArray,
-
-               cart: [],
-
+            lesson: lessonsArray,
+             cart: [],
             },
-
-            methods:{
-                
-                addToCart: function(lessons) {
-                    
-                    this.cart.push(lessons);
+              methods:{
+                  //adding subjects to shopping cart
+                 addToCart: function(lessons) {
+                 this.cart.push(lessons);
                 },
 
+            // Filter through lesson object to archuive search
+             searchLessons: function(){
+            this.lesson = lessonsArray;
+            this.lesson = this.lesson.filter(data => data.title.toLowerCase().includes(this.term) == true || data.location.toLowerCase().includes(this.term));
+             },
+                //delete subject from shopping cart
                 deleteFromCart: function(lessons, cart) {
                    this.cart.splice(this.cart.indexOf(lessons), 1);
                 },
-
+                //shopping cart 
                 showCheckout: function(){
                     console.log(this.showProd);
                     this.showProd = this.showProd ? false : true;
                 },
-
+                //once user has ordered the subjects and checked out
                 submitForm(user) {
-                    
-                    alert('Cheers '+ user.name + ' ,your order has been successfully submitted');
+                    alert('Hooray '+ user.name + ' ,your order has been successfully submitted');
                 
                 },
-
+                // to check amount of subject in cart
                 canAddToCart: function(lessons){
                     return lessons.availablespace > this.cartCount(lessons);
                 },
@@ -228,14 +219,7 @@
                     }
                     return count;
                 },
-
-                
-
-                
-
-               
-
-            },
+ },
 
             computed: {
                     cartItemCount: function(lessons){
@@ -243,7 +227,7 @@
                     },
 
                     sortedLessons(lessons, sort){
-                    //the comparison that defines the order
+                    //the comparison that shows the order
 
                     if(this.sort.sortingMethod == "location" && this.sort.sortingOrder === "ascending" ){
                     function compare (a, b){
@@ -295,30 +279,14 @@
                         return 0;
                     }
                 }
-                    //sort 'lessomArray' array and return it
+                    //sort 'lessonArray' array and return it
                     return this.lesson.sort(compare);
 
                 },
-
-                    
-                },
-
-
-                
-
-                    
-                
-
-                
-
-            
-
+             },
                             
                         })
 
     </script>
 </body>
-
 </html>
-
-    
