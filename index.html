@@ -159,7 +159,7 @@
 
             // Filter through lesson object to archuive search
              searchLessons: function(){
-            this.lesson = lessonsArray;
+            this.lesson = lessonsArray; //lesson array is coming from lessons.js and then it filters the seardch.
             this.lesson = this.lesson.filter(data => data.title.toLowerCase().includes(this.term) == true || data.location.toLowerCase().includes(this.term));
              },
                 //delete subject from shopping cart
