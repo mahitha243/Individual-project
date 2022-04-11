@@ -109,7 +109,7 @@
                 <h5 class="card-title" >Title : {{lessons.title}}</h5>
                 <p class="card-text" > Location : {{lessons.location}} </p>
                 <p> <b>Price : ${{lessons.price}}</b></p>
-                    Spaces: {{lesson.availablespace}} <br>  Rating: <span v-bind:class="lesson.icon">★★★★★</span></P>
+                    <p>Rating: <span v-bind:class="lesson.icon">★★★★★</span></P>
                 <button style="float: right;" href="#" class="btn btn-primary" v-on:click ='deleteFromCart(lessons, cart)' >Remove from Cart</button>
                 
                     <br>
